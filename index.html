@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TOMBOLA</title>
+  <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+  <h1>estrazione tombola</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>numeri estratti: </th>
+      </tr>
+    </thead>
+    <tbody id="estrazioni">
+    </tbody>
+  </table>
+
+  <script>
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.addEventListener('open', (event) => {
+      console.log('connessione stabilita');
+    });
+
+    socket.addEventListener('message', (event) => {
+      const numero = event.data;
+      const lista = document.getElementById('estrazioni');
+      const nuovo = document.createElement('tr');
+      const cella = document.createElement('td');
+      cella.textContent = numero;
+      nuovo.appendChild(cella);
+      lista.appendChild(nuovo);
+    });
+  </script>
+</body>
+</html>
